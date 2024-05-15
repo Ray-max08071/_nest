@@ -1,4 +1,4 @@
-import { Controller, Get, Req } from '@nestjs/common';
+import { Body, Controller, Get, Post, Req } from '@nestjs/common';
 import { Request } from 'express';
 import { AppService } from './app.service';
 
@@ -21,5 +21,18 @@ export class AppController {
   getName (@Req() req: Request): string {
     console.log('name', req.params) // { 0: dkadak, 1: dkadak }
     return req.params[0];
+  }
+  @Post('/user')
+  createUser (@Body() body: any, @Req() req: Request) {
+    console.log('收到请求', body);
+    const { name, age } = body
+    return {
+      msg: 'success',
+      code: '200',
+      data: {
+        name,
+        age
+      }
+    }
   }
 }
