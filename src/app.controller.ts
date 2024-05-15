@@ -1,5 +1,4 @@
-import { Body, Controller, Get, Post, Req } from '@nestjs/common';
-import { Request } from 'express';
+import { Controller, Get } from '@nestjs/common';
 import { AppService } from './app.service';
 
 // Controller 中可以添加统一后缀
@@ -7,32 +6,9 @@ import { AppService } from './app.service';
 export class AppController {
   constructor (private readonly appService: AppService) { }
 
-  // 请求完整url => api/user
-  // @Get('/user/:id') 表示动态路由
-  @Get('/user/:id')
-  getHello (@Req() req: Request): string {
-    console.log('获取用户id', req.params)
-    return req.params.id;
-  }
-
-  // 请求完整url => api/name
-  // * 标识通配符
-  @Get('/name/*')
-  getName (@Req() req: Request): string {
-    console.log('name', req.params) // { 0: dkadak, 1: dkadak }
-    return req.params[0];
-  }
-  @Post('/user')
-  createUser (@Body() body: any, @Req() req: Request) {
-    console.log('收到请求', body);
-    const { name, age } = body
-    return {
-      msg: 'success',
-      code: '200',
-      data: {
-        name,
-        age
-      }
-    }
+  @Get()
+  getHello (): string {
+    return 'Hello NestJS!';
   }
 }
+
