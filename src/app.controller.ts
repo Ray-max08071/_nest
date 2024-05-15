@@ -8,10 +8,11 @@ export class AppController {
   constructor (private readonly appService: AppService) { }
 
   // 请求完整url => api/user
-  @Get('/user')
+  // @Get('/user/:id') 表示动态路由
+  @Get('/user/:id')
   getHello (@Req() req: Request): string {
-    console.log('浏览器发送的请求', req.url)
-    return this.appService.getHello();
+    console.log('获取用户id', req.params)
+    return req.params.id;
   }
 
   // 请求完整url => api/name
