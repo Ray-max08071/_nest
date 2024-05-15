@@ -16,8 +16,10 @@ export class AppController {
   }
 
   // 请求完整url => api/name
-  @Get('/name')
-  getName (): string {
-    return 'name';
+  // * 标识通配符
+  @Get('/name/*')
+  getName (@Req() req: Request): string {
+    console.log('name', req.params) // { 0: dkadak, 1: dkadak }
+    return req.params[0];
   }
 }
