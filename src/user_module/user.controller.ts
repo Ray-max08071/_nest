@@ -7,11 +7,12 @@ import { UserService } from './user.service';
 export class userController {
   constructor (
     @Inject(UserService)
-    private userService: UserService,
+    private readonly userService: UserService,
     @Inject(AppService)
-    private appService: AppService,
+    private readonly appService: AppService,
     @Inject(DbService)
-    private dbService: DbService // 注入db服务
+    private readonly dbService: DbService, // 注入db服务
+   // 注入配置文件
   ) { }
 
   @Get()
