@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { AppService } from 'src/app.service';
 import { userController } from './user.controller';
 import { UserService } from './user.service';
 
@@ -8,7 +9,7 @@ import { UserService } from './user.service';
   // 导出模块中的控制器
   controllers: [userController],
   // 导出模块中的提供者
-  providers: [UserService],
+  providers: [UserService, AppService],
   // 导出模块中的共享模块
   exports: []
 })
