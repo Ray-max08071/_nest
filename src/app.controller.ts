@@ -1,10 +1,11 @@
-import { Controller, Get, Inject } from '@nestjs/common';
+import { Controller, Get, Inject, Optional } from '@nestjs/common';
 import { AppService } from './app.service';
 
 // Controller 中可以添加统一后缀
 @Controller('/api')
 export class AppController {
   constructor (
+    @Optional()
     @Inject('appService')
     private readonly appService: AppService,
     @Inject('config')
