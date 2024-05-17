@@ -13,6 +13,14 @@ import { UserModule } from './user_module/user.module';
       db: 'mongodb://localhost:27017/test',
       port: 3000
     }
-  }],
+  }, {
+      provide: 'APP_CONFIG',
+      useFactory: () => {
+        return {
+          db: 'mongodb://localhost:27017/test',
+          port: 8080
+        }
+      }
+    }],
 })
 export class AppModule { }

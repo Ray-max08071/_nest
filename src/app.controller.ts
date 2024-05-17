@@ -9,12 +9,14 @@ export class AppController {
     private readonly appService: AppService,
     @Inject('config')
     private readonly config: any,
+    @Inject('APP_CONFIG')
+    private readonly appConfig: any,
   ) { }
 
 
   @Get()
   getHello (): string {
-    console.log('config', this.config);
+    console.log('config', this.appConfig);
     return 'Hello NestJS!';
   }
 }
