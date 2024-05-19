@@ -12,11 +12,12 @@ export class userController {
     private readonly appService: AppService,
     @Inject(DbService)
     private readonly dbService: DbService, // 注入db服务
-   // 注入配置文件
+    // 注入配置文件
   ) { }
 
   @Get()
   getUserList () {
+    console.log('代码逻辑执行')
     return this.userService.getList()
   }
 

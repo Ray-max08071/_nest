@@ -3,6 +3,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { DbModule } from './db_module/db.module';
 import { LoggerMiddleware } from './middleware/logger.middleware';
+import { TestMiddleware } from './middleware/test.middleware';
 import { UserModule } from './user_module/user.module';
 
 
@@ -31,7 +32,7 @@ import { UserModule } from './user_module/user.module';
 })
 export class AppModule {
   configure (consumer: MiddlewareConsumer) {
-    consumer.apply(LoggerMiddleware)
+    consumer.apply(LoggerMiddleware, TestMiddleware)
       // * 标识所有路由都会走logger中间件
       .forRoutes('*')
   }
