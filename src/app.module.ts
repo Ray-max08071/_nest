@@ -5,7 +5,7 @@ import { DbModule } from './db_module/db.module';
 import { UserModule } from './user_module/user.module';
 
 @Module({
-  imports: [UserModule, DbModule],
+  imports: [UserModule.forRoot(), DbModule],
   controllers: [AppController],
   providers: [{
     provide: 'appService',
@@ -19,6 +19,7 @@ import { UserModule } from './user_module/user.module';
   }, {
     provide: 'APP_CONFIG',
     useFactory: () => {
+      // 动态添加provider
       return {
         db: 'mongodb://localhost:27017/test',
         port: 8080

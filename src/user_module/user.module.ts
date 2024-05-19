@@ -5,13 +5,21 @@ import { UserService } from './user.service';
 
 @Module({
   // 导入其他模块
-  imports: [],
-  // 导出模块中的控制器
+  // imports: [],
+  // // 导出模块中的控制器
   controllers: [userController],
-  // 导出模块中的提供者
-  providers: [UserService, AppService],
-  // 导出模块中的共享模块
-  exports: []
+  // // 导出模块中的提供者
+  // providers: [UserService, AppService],
+  // // 导出模块中的共享模块
+  // exports: []
 })
 
-export class UserModule { }
+export class UserModule {
+  static forRoot () {
+    return {
+      module: UserModule,
+      providers: [UserService, AppService],
+      exports: [UserService, AppService],
+    };
+  }
+}
