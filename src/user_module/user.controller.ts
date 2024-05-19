@@ -1,6 +1,7 @@
-import { Controller, Get, HttpException, HttpStatus, Inject } from '@nestjs/common';
+import { Controller, Get, Inject } from '@nestjs/common';
 import { AppService } from 'src/app.service';
 import { DbService } from 'src/db_module/db.servive';
+import { HttpExceptionForbidden } from 'src/http/http_forbodden';
 import { UserService } from './user.service';
 
 @Controller('api/user')
@@ -20,7 +21,7 @@ export class userController {
     console.log('代码逻辑执行')
     const randow = Math.random()
     if (randow > 0.5) {
-      throw new HttpException('随机数大于0.5', HttpStatus.FORBIDDEN, { description: '1111' })
+      throw new HttpExceptionForbidden()
     } else {
       return this.userService.getList()
     }
