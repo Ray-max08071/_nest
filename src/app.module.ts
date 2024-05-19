@@ -1,9 +1,9 @@
-import { MiddlewareConsumer, Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, RequestMethod } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { DbModule } from './db_module/db.module';
+import { DemoMiddleware } from './middleware/demo.middleware';
 import { LoggerMiddleware } from './middleware/logger.middleware';
-import { TestMiddleware } from './middleware/test.middleware';
 import { UserModule } from './user_module/user.module';
 
 
@@ -32,9 +32,21 @@ import { UserModule } from './user_module/user.module';
 })
 export class AppModule {
   configure (consumer: MiddlewareConsumer) {
-    consumer.apply(LoggerMiddleware, TestMiddleware)
+    // consumer.apply 可以传多个中间件 
+    // 执行顺序 => 先进后出 业务逻辑在多个中间件中间执行
+    // next() 方法表示 业务逻辑代码执行
+    consumer.apply(LoggerMiddleware, DemoMiddleware)
       // * 标识所有路由都会走logger中间件
+      // 中间件可以 传 控制器,表示该控制器下的所有路径都会生效
+      // 也可以使用 exclude 来排除某些特定的路由和请求方式
+      .exclude({
+        path: 'cats',
+        method: RequestMethod.GET
+      })
+      // forRoutes 指定某些路由和请求方式生效 forRoutes({ path:'/user',method:RequestMethod.GET })
+      // forRoutes 可以传多个控制器 
       .forRoutes('*')
+
   }
 
 }
