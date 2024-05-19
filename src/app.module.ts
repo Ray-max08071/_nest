@@ -1,8 +1,10 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { DbModule } from './db_module/db.module';
+import { LoggerMiddleware } from './middleware/logger.middleware';
 import { UserModule } from './user_module/user.module';
+
 
 @Module({
   imports: [UserModule.forRoot(), DbModule],
@@ -27,4 +29,11 @@ import { UserModule } from './user_module/user.module';
     }
   }],
 })
-export class AppModule { }
+export class AppModule {
+  configure (consumer: MiddlewareConsumer) {
+    consumer.apply(LoggerMiddleware)
+      // * 标识所有路由都会走logger中间件
+      .forRoutes('*')
+  }
+
+}

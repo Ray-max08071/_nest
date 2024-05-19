@@ -7,7 +7,7 @@ import { UserService } from './user.service';
   // 导入其他模块
   // imports: [],
   // // 导出模块中的控制器
-  controllers: [userController],
+  // controllers: [userController],
   // // 导出模块中的提供者
   // providers: [UserService, AppService],
   // // 导出模块中的共享模块
@@ -17,9 +17,12 @@ import { UserService } from './user.service';
 export class UserModule {
   static forRoot () {
     return {
+      // 全局注册模块
+      // global: true,
       module: UserModule,
       providers: [UserService, AppService],
-      exports: [UserService, AppService],
+      // exports: [UserService, AppService],
+      controllers: [userController],
     };
   }
 }
