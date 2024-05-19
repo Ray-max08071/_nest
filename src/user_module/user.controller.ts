@@ -1,6 +1,7 @@
-import { Controller, Get, Inject } from '@nestjs/common';
+import { Controller, Get, Inject, UseFilters } from '@nestjs/common';
 import { AppService } from 'src/app.service';
 import { DbService } from 'src/db_module/db.servive';
+import { HttpExceptionFilter } from 'src/http/http_exception.filter';
 import { HttpExceptionForbidden } from 'src/http/http_forbodden';
 import { UserService } from './user.service';
 
@@ -17,6 +18,7 @@ export class userController {
   ) { }
 
   @Get()
+  @UseFilters(new HttpExceptionFilter)
   getUserList () {
     console.log('代码逻辑执行')
     const randow = Math.random()
