@@ -1,10 +1,17 @@
 import { Controller, Get, Inject, UseFilters } from '@nestjs/common';
 import { AppService } from 'src/app.service';
 import { DbService } from 'src/db_module/db.servive';
-import { HttpExceptionFilter } from 'src/http/http_exception.filter';
+import { AllExceptionsFilter } from 'src/http/http_exception.filter';
 import { HttpExceptionForbidden } from 'src/http/http_forbodden';
 import { UserService } from './user.service';
 
+/**
+ *  UseFilters 错误过滤器的三种写法
+ *   1. 可以写在单个路由下面
+ *   2. 可以写在Controller上面
+ *   3. 可以写在全局 使用 app.useGlobalFilters(new AllExceptionsFilter)
+ * */
+@UseFilters(new AllExceptionsFilter)
 @Controller('api/user')
 export class userController {
   constructor (
@@ -18,7 +25,7 @@ export class userController {
   ) { }
 
   @Get()
-  @UseFilters(new HttpExceptionFilter)
+  // 错误过滤器要配合 HttpException 一起使用 否则无法捕获错误
   getUserList () {
     console.log('代码逻辑执行')
     const randow = Math.random()
