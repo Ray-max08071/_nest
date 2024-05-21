@@ -1,9 +1,12 @@
-import { Controller, Get, Inject, UseFilters } from '@nestjs/common';
+import { Body, Controller, Get, Inject, Post, UseFilters, UsePipes } from '@nestjs/common';
 import { AppService } from 'src/app.service';
 import { DbService } from 'src/db_module/db.servive';
 import { AllExceptionsFilter } from 'src/http/http_exception.filter';
 import { HttpExceptionForbidden } from 'src/http/http_forbodden';
+import { JoiValidationPipe } from '../vaildata/vadation.pipe';
 import { UserService } from './user.service';
+
+const Joi = require('joi');
 
 /**
  *  UseFilters 错误过滤器的三种写法
@@ -11,6 +14,14 @@ import { UserService } from './user.service';
  *   2. 可以写在Controller上面
  *   3. 可以写在全局 使用 app.useGlobalFilters(new AllExceptionsFilter)
  * */
+
+// 定义校验类型
+
+let schema = Joi.object({
+  username: Joi.string().required(),
+  age: Joi.number().required()
+})
+
 @UseFilters(new AllExceptionsFilter)
 @Controller('api/user')
 export class userController {
@@ -44,5 +55,13 @@ export class userController {
   @Get('db')
   getDbinfo () {
     return this.dbService.getData()
+  }
+
+
+  @Post()
+  @UsePipes(new JoiValidationPipe(schema))
+  createUser (@Body() body: typeof schema) {
+    console.log(body)
+    return 'ok'
   }
 }
