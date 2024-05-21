@@ -1,7 +1,9 @@
 import { Module } from '@nestjs/common';
+import { APP_GUARD } from '@nestjs/core';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { DbModule } from './db_module/db.module';
+import { AuthGuard } from './guard/auth.guard';
 import { UserModule } from './user_module/user.module';
 
 
@@ -26,6 +28,9 @@ import { UserModule } from './user_module/user.module';
         port: 8080
       }
     }
+  }, {
+    provide: APP_GUARD,
+    useClass: AuthGuard
   }],
 })
 export class AppModule {
