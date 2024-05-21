@@ -1,9 +1,9 @@
-import { Body, Controller, Get, Inject, Post } from '@nestjs/common';
+import { Body, Controller, Get, Inject, Post, UseInterceptors } from '@nestjs/common';
 import { AppService } from 'src/app.service';
 import { DbService } from 'src/db_module/db.servive';
 import { HttpExceptionForbidden } from 'src/http/http_forbodden';
+import { LoggingInterceptor } from 'src/interceptor/logging.interceptor';
 import { CreateCatDto } from '../dto/create-cat.dto';
-import { ValidationPipe } from '../vaildata/vadation.pipe';
 import { UserService } from './user.service';
 
 const Joi = require('joi');
@@ -53,8 +53,9 @@ export class userController {
 
 
   @Post()
-  createUser (@Body(new ValidationPipe()) createCatDto: CreateCatDto,) {
+  @UseInterceptors(LoggingInterceptor)
+  createUser (@Body() createCatDto: CreateCatDto,) {
     console.log(createCatDto)
-    return 'ok'
+    return createCatDto
   }
 }

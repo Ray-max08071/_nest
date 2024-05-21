@@ -4,6 +4,7 @@ export class CreateCatDto {
   @IsString()
   name: string;
 
-  @IsInt()
-  age: number;
+  // @IsOptional()
+  // @IsInt()
+  // age: number;
 }

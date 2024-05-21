@@ -23,6 +23,7 @@ export class ValidationPipe implements PipeTransform<any> {
       return value;
     }
     const object = plainToInstance(metatype, value);
+    console.log('Validating object:', typeof object.age);
     const errors = await validate(object);
     if (errors.length > 0) {
       throw new BadRequestException('参数校验失败');
