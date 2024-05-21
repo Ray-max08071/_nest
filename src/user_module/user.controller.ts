@@ -1,9 +1,9 @@
-import { Body, Controller, Get, Inject, Post, UseFilters, UsePipes } from '@nestjs/common';
+import { Body, Controller, Get, Inject, Post } from '@nestjs/common';
 import { AppService } from 'src/app.service';
 import { DbService } from 'src/db_module/db.servive';
-import { AllExceptionsFilter } from 'src/http/http_exception.filter';
 import { HttpExceptionForbidden } from 'src/http/http_forbodden';
-import { JoiValidationPipe } from '../vaildata/vadation.pipe';
+import { CreateCatDto } from '../dto/create-cat.dto';
+import { ValidationPipe } from '../vaildata/vadation.pipe';
 import { UserService } from './user.service';
 
 const Joi = require('joi');
@@ -15,14 +15,8 @@ const Joi = require('joi');
  *   3. 可以写在全局 使用 app.useGlobalFilters(new AllExceptionsFilter)
  * */
 
-// 定义校验类型
 
-let schema = Joi.object({
-  username: Joi.string().required(),
-  age: Joi.number().required()
-})
-
-@UseFilters(new AllExceptionsFilter)
+// @UseFilters(new AllExceptionsFilter)
 @Controller('api/user')
 export class userController {
   constructor (
@@ -59,9 +53,8 @@ export class userController {
 
 
   @Post()
-  @UsePipes(new JoiValidationPipe(schema))
-  createUser (@Body() body: typeof schema) {
-    console.log(body)
+  createUser (@Body(new ValidationPipe()) createCatDto: CreateCatDto,) {
+    console.log(createCatDto)
     return 'ok'
   }
 }
