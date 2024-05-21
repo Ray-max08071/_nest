@@ -1,6 +1,7 @@
 import { Body, Controller, Get, Inject, Post, UseGuards, UseInterceptors } from '@nestjs/common';
 import { AppService } from 'src/app.service';
 import { DbService } from 'src/db_module/db.servive';
+import { Roles } from 'src/decorator/roles.decorator';
 import { AuthGuard } from 'src/guard/auth.guard';
 import { HttpExceptionForbidden } from 'src/http/http_forbodden';
 import { LoggingInterceptor } from 'src/interceptor/logging.interceptor';
@@ -43,6 +44,7 @@ export class userController {
   }
 
   @Get('app')
+  @Roles('admin')
   @UseGuards(AuthGuard)
   getAppinfo () {
     return this.appService.getHello()
