@@ -1,6 +1,7 @@
-import { Body, Controller, Get, Inject, Post, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Get, Inject, Post, UseGuards, UseInterceptors } from '@nestjs/common';
 import { AppService } from 'src/app.service';
 import { DbService } from 'src/db_module/db.servive';
+import { AuthGuard } from 'src/guard/auth.guard';
 import { HttpExceptionForbidden } from 'src/http/http_forbodden';
 import { LoggingInterceptor } from 'src/interceptor/logging.interceptor';
 import { CreateCatDto } from '../dto/create-cat.dto';
@@ -42,6 +43,7 @@ export class userController {
   }
 
   @Get('app')
+  @UseGuards(AuthGuard)
   getAppinfo () {
     return this.appService.getHello()
   }
