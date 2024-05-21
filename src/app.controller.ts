@@ -1,4 +1,4 @@
-import { Controller, Get, Inject, Optional } from '@nestjs/common';
+import { Controller, Get, HttpStatus, Inject, Optional, Param, ParseIntPipe } from '@nestjs/common';
 import { AppService } from './app.service';
 
 // Controller 中可以添加统一后缀
@@ -24,6 +24,12 @@ export class AppController {
   getHello (): string {
     console.log('config', this.appService);
     return 'Hello NestJS!';
+  }
+  @Get(':id')
+  getUserInfo (@Param('id', new ParseIntPipe({
+    errorHttpStatusCode: HttpStatus.BAD_GATEWAY
+  })) id: string) {
+    return `user info${id}`
   }
 }
 
