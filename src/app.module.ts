@@ -5,10 +5,12 @@ import { AppService } from './app.service';
 import { DbModule } from './db_module/db.module';
 import { AuthGuard } from './guard/auth.guard';
 import { UserModule } from './user_module/user.module';
+import { DemoModule } from './demo/demo.module';
+import { UploadModule } from './upload/upload.module';
 
 
 @Module({
-  imports: [UserModule.forRoot(), DbModule],
+  imports: [UserModule.forRoot(), DbModule, DemoModule, UploadModule],
   controllers: [AppController],
   providers: [{
     provide: 'appService',

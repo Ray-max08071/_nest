@@ -9,14 +9,10 @@ export class AuthGuard implements CanActivate {
     context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
     const request = context.switchToHttp().getRequest();
-    const token = request.headers.token
-    const roles = this.reflector.get<string[]>('roles', context.getHandler());
-    console.log('roles', roles)
-    console.log('token', token)
-    if (token === '123456') {
-      return true
-    } else {
-      return false
-    }
+    // const token = request.headers.token
+    // const roles = this.reflector.get<string[]>('roles', context.getHandler());
+    // console.log('roles', roles)
+    // console.log('token', token)
+    return true
   }
 }
