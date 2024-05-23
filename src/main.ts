@@ -3,6 +3,7 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import * as session from 'express-session';
 import { join } from 'path';
 import { AppModule } from './app.module';
+import { Response } from './common/response';
 
 async function bootstrap () {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -16,8 +17,9 @@ async function bootstrap () {
   app.useStaticAssets(join(__dirname, 'images'), {
     prefix: '/images'
   })
+  app.useGlobalInterceptors(new Response())
   app.use(session({ secret: 'Ray', cookie: { maxAge: 60000 }, rolling: true }))
-  await app.listen(8080);
+  await app.listen(3000);
 
 }
 bootstrap();
