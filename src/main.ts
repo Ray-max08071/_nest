@@ -3,6 +3,7 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import * as session from 'express-session';
 import { join } from 'path';
 import { AppModule } from './app.module';
+import { Filter } from './common/filter';
 import { Response } from './common/response';
 
 async function bootstrap () {
@@ -17,6 +18,7 @@ async function bootstrap () {
   app.useStaticAssets(join(__dirname, 'images'), {
     prefix: '/images'
   })
+  app.useGlobalFilters(new Filter())
   app.useGlobalInterceptors(new Response())
   app.use(session({ secret: 'Ray', cookie: { maxAge: 60000 }, rolling: true }))
   await app.listen(3000);
