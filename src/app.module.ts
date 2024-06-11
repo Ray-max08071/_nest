@@ -3,14 +3,15 @@ import { APP_GUARD } from '@nestjs/core';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { DbModule } from './db_module/db.module';
-import { AuthGuard } from './guard/auth.guard';
-import { UserModule } from './user_module/user.module';
 import { DemoModule } from './demo/demo.module';
+import { DownloadModule } from './download/download.module';
+import { AuthGuard } from './guard/auth.guard';
 import { UploadModule } from './upload/upload.module';
+import { UserModule } from './user_module/user.module';
 
 
 @Module({
-  imports: [UserModule.forRoot(), DbModule, DemoModule, UploadModule],
+  imports: [UserModule.forRoot(), DbModule, DemoModule, UploadModule, DownloadModule],
   controllers: [AppController],
   providers: [{
     provide: 'appService',
